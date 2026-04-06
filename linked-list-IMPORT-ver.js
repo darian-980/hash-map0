@@ -141,30 +141,6 @@ export function LinkedList() {
 
     }
 
-    function replaceKeyValue(value) { // new function made specifically for linkedlists
-        if (Array.isArray(value)) {
-            {
-                function nextIteration(node) {
-                    if (value[0] === node.value[0]) {
-                        console.log(`value[0]: ` + value[0] + ` has a duplicate.. replacing ` + node.value[1] + ` with: ` + value[1]);
-                        node.value[1] = value[1];
-                        throw { value: true }
-                    }
-                }
-                try {
-                    iterate(head, nextIteration);
-                    console.log("value not found in array bucket..appending");
-                    append(value);
-                } catch (e) {
-                    return e.value;
-                };
-
-                return false;
-
-            }
-        }
-    }
-
     function at(index) {
         let indexCount = 0;
 
@@ -187,7 +163,95 @@ export function LinkedList() {
 
     }
 
-    return { get head() { return head; }, get tail() { return tail; }, append, prepend, return_head, return_tail, toString, size, at, pop, contains, findIndex, replaceKeyValue }; // iterate() not returned so that it cannot be called manually
+    function replaceKeyValue(value) { // new function made specifically for linkedlists
+        if (Array.isArray(value)) {
+
+            function nextIteration(node) {
+                if (value[0] === node.value[0]) {
+                    console.log(`value[0]: ` + value[0] + ` has a duplicate.. replacing ` + node.value[1] + ` with: ` + value[1]);
+                    node.value[1] = value[1];
+                    throw { value: true }
+                }
+            }
+            try {
+                iterate(head, nextIteration);
+                console.log("value not found in array bucket..appending");
+                append(value);
+            } catch (e) {
+                return e.value;
+            };
+
+            return false;
+
+        }
+    }
+
+    function removeKeyValue(value) {
+        function nextIteration(node) {
+            if (value === node.nextNode.value[0]) {
+                if (node.nextNode === tail) {
+                    console.log(`value[0]: ` + node.nextNode.value[0] + ` is found as the tail..removing the key, value: ` + node.nextNode.value[1] + `. the new tail is ` + node.value[0]);
+                    node.nextNode = null;
+                    tail = node;
+                } else {
+                    console.log(`value[0]: ` + node.nextNode.value[0] + ` is found..removed the key and the value: ` + node.nextNode.value[1]);
+                    node.nextNode = node.nextNode.nextNode;
+                }
+                throw { value: true }
+            } else if (value === node.value[0] && node === head) {
+                console.log(`value[0]: ` + node.value[0] + ` is found as the head..removed the key and the value: ` + node.value[1] + `. the new head is ` + node.nextNode.value[0]);
+                head = node.nextNode;
+                if (head === null) {
+                    tail = null;
+                    console.log(`head is null..tail is now null`)
+                }
+                throw { value: true }
+            }
+        }
+        try {
+            iterate(head, nextIteration);
+        } catch (e) {
+            return e.value;
+        };
+
+        return false;
+
+
+    }
+
+    function findKeyValue(value) {
+        function nextIteration(node) {
+            if (value === node.value[0]) {
+                console.log(`value[0] found, the value for the key: ` + value + ` is: ` + node.value[1])
+                throw { value: node.value[1] }
+            }
+        }
+        try {
+            iterate(head, nextIteration);
+        } catch (e) {
+            return e.value;
+        };
+
+        return null;
+    }
+
+    function containsKeyValue(value) {
+        function nextIteration(node) {
+            if (value === node.value[0]) {
+                console.log(`key ` + node.value[0] + ` exists`)
+                throw { value: true }
+            }
+        }
+        try {
+            iterate(head, nextIteration);
+        } catch (e) {
+            return e.value;
+        };
+
+        return false;
+    }
+
+    return { get head() { return head; }, get tail() { return tail; }, append, prepend, return_head, return_tail, toString, size, at, pop, contains, findIndex, replaceKeyValue, findKeyValue, containsKeyValue, removeKeyValue }; // iterate() not returned so that it cannot be called manually
 }
 
 
