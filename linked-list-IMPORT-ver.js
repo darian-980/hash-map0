@@ -19,7 +19,7 @@ export function LinkedList() {
             tail.nextNode = newnode;
         }
         tail = newnode;
-        console.log("appending:", value)
+        // console.log("appending:", value)
     }
 
     function prepend(value) {
@@ -168,14 +168,14 @@ export function LinkedList() {
 
             function nextIteration(node) {
                 if (value[0] === node.value[0]) {
-                    console.log(`value[0]: ` + value[0] + ` has a duplicate.. replacing ` + node.value[1] + ` with: ` + value[1]);
+                    // console.log(`value[0]: ` + value[0] + ` has a duplicate.. replacing ` + node.value[1] + ` with: ` + value[1]);
                     node.value[1] = value[1];
                     throw { value: true }
                 }
             }
             try {
                 iterate(head, nextIteration);
-                console.log("value not found in array bucket..appending");
+                // console.log("value not found in array bucket..appending");
                 append(value);
             } catch (e) {
                 return e.value;

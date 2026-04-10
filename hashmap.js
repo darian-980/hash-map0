@@ -9,7 +9,16 @@ function hashmap() {
         // console.log("map length is: " + length())
         if (capacity * loadFactor < length()) {
             capacity += capacity;
-            // console.log("loadfactor is " + length() + "... so new capacity is: " + capacity);
+            refactorHashmap();
+            console.log("loadfactor is " + length() + "... so new capacity is: " + capacity);
+        }
+    }
+
+    function refactorHashmap() {
+        let tempEntriesArray = entries(); // save all the hashmap entries before clearing the map
+        map = [];
+        for (let i = 0; i < tempEntriesArray.length; i++) {
+            set(tempEntriesArray[i][0], tempEntriesArray[i][1], true);
         }
     }
 
@@ -22,11 +31,11 @@ function hashmap() {
             hashCode = hashCode % capacity; //
             // hashCode = 2; // FOR TESTING ONLY
         }
-        console.log("hash index is: " + hashCode);
+        // console.log("hash index is: " + hashCode);
         return hashCode;
     }
 
-    function set(key, value) {
+    function set(key, value, skipLoadCheck = false) {
         const entryArray = [key, value];
         const hashedIndex = hash(key);
         if (map[hashedIndex] === undefined) { //make new linkedlist in index if index bucket is empty
@@ -34,11 +43,10 @@ function hashmap() {
             const newLinkedList = LinkedList();
             map[hashedIndex] = newLinkedList;
             map[hashedIndex].append(entryArray);
-            testLoadFactor(); // test capacity
         } else {
             map[hashedIndex].replaceKeyValue(entryArray); // function that replaces values in the same bucket with matching keys, and if the keys are unique then it appends them to the linked list
-            testLoadFactor(); // test capacity
-        }
+
+        } if (skipLoadCheck !== true) testLoadFactor(); // test capacity
     }
 
     function get(key) {
@@ -135,6 +143,9 @@ hashmap0.set("tail", "grok");
 hashmap0.set("sdf234", "grok");
 hashmap0.set("swerew234", "grok");
 hashmap0.set("swerfdsd34", "grok");
+
+console.log(hashmap0.map[6].toString());
+
 hashmap0.set("swsdfdsfssd34", "grok");
 hashmap0.set("swsdfdfdsfsd34", "grok");
 hashmap0.set("swsdf345tgfd34", "grok");
@@ -144,7 +155,7 @@ hashmap0.set("gfdgfdsfsdfsfsfgd34", "grok");
 hashmap0.set("gfdgfdsfsfdssfgd34", "grok");
 
 
-console.log("hashmap length: " + hashmap0.length())
+// console.log("hashmap length: " + hashmap0.length())
 
 // console.log(hashmap0.map[2].toString());
 // hashmap0.remove("removeKey");
@@ -152,11 +163,11 @@ console.log("hashmap length: " + hashmap0.length())
 // hashmap0.remove("test");
 // console.log(hashmap0.map[2].toString());
 // hashmap0.remove("tail");
-console.log(hashmap0.map[2].toString());
+console.log(hashmap0.map[6].toString());
 
-console.log(hashmap0.keys())
-console.log(hashmap0.values())
-console.log(hashmap0.entries())
+// console.log(hashmap0.keys())
+// console.log(hashmap0.values())
+// console.log(hashmap0.entries())
 
 
 // console.log(hashmap0.map[2].return_tail())
