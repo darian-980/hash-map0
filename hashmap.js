@@ -6,8 +6,10 @@ function hashmap() {
     let map = [];
 
     function testLoadFactor() { // test capacity based on load factor, if the linkedlist is larger than the capacity*loadfactor, increase capacity by double;
-        if (capacity * loadFactor < map.length) {
+        // console.log("map length is: " + length())
+        if (capacity * loadFactor < length()) {
             capacity += capacity;
+            // console.log("loadfactor is " + length() + "... so new capacity is: " + capacity);
         }
     }
 
@@ -18,7 +20,7 @@ function hashmap() {
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
             hashCode = hashCode % capacity; //
-            hashCode = 2; // FOR TESTING ONLY
+            // hashCode = 2; // FOR TESTING ONLY
         }
         console.log("hash index is: " + hashCode);
         return hashCode;
@@ -28,7 +30,7 @@ function hashmap() {
         const entryArray = [key, value];
         const hashedIndex = hash(key);
         if (map[hashedIndex] === undefined) { //make new linkedlist in index if index bucket is empty
-            console.log(`index is empty, making index`);
+            // console.log(`index is empty, making index`);
             const newLinkedList = LinkedList();
             map[hashedIndex] = newLinkedList;
             map[hashedIndex].append(entryArray);
@@ -79,7 +81,45 @@ function hashmap() {
         return totalSize;
     }
 
-    return { map, hash, set, get, has, remove, clear, length }
+    function keys() {
+        let keysArray = [];
+
+        for (let i = 0; i < map.length; i++) {
+            if (map[i] !== undefined) {
+                // console.log(map[i].allKeys()) 
+                keysArray.push(...map[i].allKeys());
+            }
+
+        }
+        return keysArray;
+    }
+
+    function values() {
+        let valuesArray = [];
+
+        for (let i = 0; i < map.length; i++) {
+            if (map[i] !== undefined) {
+                // console.log(map[i].allValues()) 
+                valuesArray.push(...map[i].allValues());
+            }
+
+        }
+        return valuesArray;
+    }
+
+    function entries() {
+        let entriesArray = [];
+
+        for (let i = 0; i < map.length; i++) {
+            if (map[i] !== undefined) {
+                entriesArray.push(...map[i].allEntries());
+            }
+
+        }
+        return entriesArray;
+    }
+
+    return { map, hash, set, get, has, remove, clear, length, keys, values, entries }
 }
 
 const hashmap0 = hashmap();
@@ -92,7 +132,19 @@ hashmap0.set("sdf2", "grok");
 hashmap0.set("tyuytu3", "grok");
 hashmap0.set("tail", "grok");
 
-console.log(hashmap0.length())
+hashmap0.set("sdf234", "grok");
+hashmap0.set("swerew234", "grok");
+hashmap0.set("swerfdsd34", "grok");
+hashmap0.set("swsdfdsfssd34", "grok");
+hashmap0.set("swsdfdfdsfsd34", "grok");
+hashmap0.set("swsdf345tgfd34", "grok");
+hashmap0.set("swsdfdsfsdfsdfsgfd34", "grok");
+hashmap0.set("gfdgdfgdfgd34", "grok");
+hashmap0.set("gfdgfdsfsdfsfsfgd34", "grok");
+hashmap0.set("gfdgfdsfsfdssfgd34", "grok");
+
+
+console.log("hashmap length: " + hashmap0.length())
 
 // console.log(hashmap0.map[2].toString());
 // hashmap0.remove("removeKey");
@@ -102,6 +154,9 @@ console.log(hashmap0.length())
 // hashmap0.remove("tail");
 console.log(hashmap0.map[2].toString());
 
+console.log(hashmap0.keys())
+console.log(hashmap0.values())
+console.log(hashmap0.entries())
 
 
 // console.log(hashmap0.map[2].return_tail())

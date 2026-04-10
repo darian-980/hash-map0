@@ -251,7 +251,47 @@ export function LinkedList() {
         return false;
     }
 
-    return { get head() { return head; }, get tail() { return tail; }, append, prepend, return_head, return_tail, toString, size, at, pop, contains, findIndex, replaceKeyValue, findKeyValue, containsKeyValue, removeKeyValue }; // iterate() not returned so that it cannot be called manually
+    function allKeys() {
+        let keyArray = [];
+
+        function nextIteration(node) {
+            keyArray.push(node.value[0]) //does this every recursive iteration
+        }
+
+        // return iterate(head)
+        iterate(head, nextIteration);
+        return keyArray;
+
+    }
+
+
+    function allValues() {
+        let valueArray = [];
+
+        function nextIteration(node) {
+            valueArray.push(node.value[1]) //does this every recursive iteration
+        }
+
+        // return iterate(head)
+        iterate(head, nextIteration);
+        return valueArray;
+
+    }
+
+    function allEntries() {
+        let entriesArray = [];
+
+        function nextIteration(node) {
+            entriesArray.push(node.value) //does this every recursive iteration
+        }
+
+        // return iterate(head)
+        iterate(head, nextIteration);
+        return entriesArray;
+
+    }
+
+    return { get head() { return head; }, get tail() { return tail; }, append, prepend, return_head, return_tail, toString, size, at, pop, contains, findIndex, replaceKeyValue, findKeyValue, containsKeyValue, removeKeyValue, allKeys, allValues, allEntries }; // iterate() not returned so that it cannot be called manually
 }
 
 
